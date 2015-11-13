@@ -31,6 +31,26 @@ public class NumberDisplay {
      */
     public void setValue (int value)
     {
-        display = value;
+        if (display >= 0 && display < limit) {
+            display = value;
+        }
+        else {
+            System.out.println("El valor tiene que ser mayor que 0 y menor que el límite");
+        }
+    }
+    
+    /**
+     * Método que devuelve el valor actual de display en forma de cadena de 2 caracteres
+     */
+    public String getDisplayValue ()
+    {
+        String displayValue;
+        if (display >= 0 && display < 10) {
+            displayValue = "0" + display;
+        }
+        else {
+            displayValue = "" + display;
+        }
+        return displayValue;
     }
 }
