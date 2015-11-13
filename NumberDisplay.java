@@ -25,4 +25,12 @@ public class NumberDisplay {
         limit = lim; //límite del display
         display = 0;
     }
+    
+    /**
+     * Método setter que fija el valor actual del display al valor pasado como parametro
+     */
+    public void setValue (int value)
+    {
+        display = value;
+    }
 }
