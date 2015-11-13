@@ -14,7 +14,7 @@
 public class NumberDisplay {
     // Atributo que marca el límite.
     private int limit;
-    //
+    // Valor a introducir.
     private int display;
     
     /**
@@ -31,11 +31,11 @@ public class NumberDisplay {
      */
     public void setValue (int value)
     {
-        if (display >= 0 && display < limit) {
+        if (value >= 0 && value < limit) {
             display = value;
         }
         else {
-            System.out.println("El valor tiene que ser mayor que 0 y menor que el límite");
+            System.out.println("El valor tiene que ser mayor que 0 y menor que el límite (limite = " + limit + ")");
         }
     }
     
@@ -60,5 +60,16 @@ public class NumberDisplay {
     public int getValue ()
     {
         return display;
+    }
+    
+    /**
+     * Método que incrementa en 1 el valor de display y lo hace volver al principio si llega al limite
+     */
+    public void increment ()
+    {
+        display++;
+        if (display == limit) {
+            display = 0;
+        }
     }
 }
