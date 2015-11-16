@@ -15,7 +15,7 @@ public class ClockDisplay {
     // Display para los minutos
     private NumberDisplay minutos;
     // Datos guardados en un String para mostar la hora
-    private String stringTime;
+    private String timeNow;
     
     /**
      * Crea una objeto de la clase ClockDisplay que fija la hora en 00:00
@@ -53,7 +53,18 @@ public class ClockDisplay {
      */
     public String getTime ()
     {
-        String timeNow = horas.getDisplayValue() + ":" + minutos.getDisplayValue();
+        timeNow = horas.getDisplayValue() + ":" + minutos.getDisplayValue();
         return timeNow;
+    }
+    
+    /**
+     * Método que hace avanzar en un minuto la hora actual
+     */
+    public void timeTick ()
+    {
+        minutos.increment();
+        if (minutos.getValue() == 0) {
+            horas.increment();
+        }
     }
 }
