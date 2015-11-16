@@ -37,4 +37,15 @@ public class ClockDisplay {
         minutos.setValue(parMinuto);
     }
     
+    /**
+     * Método setter que fija los parámetros introducidos como lahora nueva actual
+     */
+    public void setTime (int parHora,int parMinuto)
+    {
+        horas = new NumberDisplay(24);
+        minutos = new NumberDisplay(60);
+        horas.setValue(parHora);
+        minutos.setValue(parMinuto);
+    }
+    
 }
