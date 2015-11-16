@@ -48,4 +48,12 @@ public class ClockDisplay {
         minutos.setValue(parMinuto);
     }
     
+    /**
+     * Método que devuelve la hora con una cadena de 5 caracteres
+     */
+    public String getTime ()
+    {
+        String timeNow = horas.getDisplayValue() + ":" + minutos.getDisplayValue();
+        return timeNow;
+    }
 }
