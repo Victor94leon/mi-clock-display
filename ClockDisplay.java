@@ -16,22 +16,26 @@ public class ClockDisplay {
     private NumberDisplay minutos;
     // Datos guardados en un String para mostar la hora
     private String timeNow;
+    // Parametro booleano para indicar si el objeto muestra la hora en formato 00:00 o AM/PM
+    private boolean formatoAMPM;
     
     /**
-     * Crea una objeto de la clase ClockDisplay que fija la hora en 00:00 
+     * Crea una objeto de la clase ClockDisplay que da la opción de mostrar la hora en formato 00:00(false) o en AM/PM(true)
      */
-    public ClockDisplay ()
+    public ClockDisplay (boolean formatoReloj)
     {
+        formatoAMPM = formatoReloj;
         horas = new NumberDisplay(24);
         minutos = new NumberDisplay(60);
         timeNow = horas.getDisplayValue() + ":" + minutos.getDisplayValue();
     }
     
     /**
-     * Crea una objeto de la clase ClockDisplay con dos parametros 
+     * Crea una objeto de la clase ClockDisplay con tre parametros para fijar una hora y la opción de mostrar la hora en formato 00:00(false) o en AM/PM(true) 
      */
-    public ClockDisplay (int parHora,int parMinuto)
+    public ClockDisplay (int parHora,int parMinuto,boolean formatoReloj)
     {
+        formatoAMPM = formatoReloj;
         horas = new NumberDisplay(24);
         minutos = new NumberDisplay(60);
         horas.setValue(parHora);
@@ -52,30 +56,33 @@ public class ClockDisplay {
     }
     
     /**
-     * Método que devuelve la hora con una cadena de caracteres
+     * Método que devuelve la hora con una cadena de caracteres segun AM/PM
      */
     public String getTime ()
     {
-        int formatoPM = horas.getValue();
-        if (formatoPM == 00) {
-            timeNow = 12 + ":" + minutos.getDisplayValue() + " de medianoche";
-        }
-        else {
-            if (formatoPM > 12) {
-                int horaCambiada;
-                horaCambiada = formatoPM - 12;
-                timeNow = horaCambiada + ":" + minutos.getDisplayValue() + " pm";
+        if (formatoAMPM == true) { 
+            int formatoPM = horas.getValue();
+            if (formatoPM == 00) {
+                timeNow = 12 + ":" + minutos.getDisplayValue() + " de medianoche";
             }
             else {
-                if (formatoPM == 12){
-                    timeNow = "12" + ":" + minutos.getDisplayValue() + " del mediodía";
+                if (formatoPM > 12) {
+                    int horaCambiada;
+                    horaCambiada = formatoPM - 12;
+                    timeNow = horaCambiada + ":" + minutos.getDisplayValue() + " pm";
                 }
                 else {
-                    int horaCambiada;
-                    horaCambiada = formatoPM;
-                    timeNow= horaCambiada + ":" + minutos.getDisplayValue() + " am";
+                    if (formatoPM == 12){
+                        timeNow = "12" + ":" + minutos.getDisplayValue() + " del mediodía";
+                    }
+                    else {
+                        int horaCambiada;
+                        horaCambiada = formatoPM;
+                        timeNow= horaCambiada + ":" + minutos.getDisplayValue() + " am";
+                    }
                 }
             }
+            timeNow = horas.getDisplayValue() + ":" + minutos.getDisplayValue();
         }
         return timeNow;
     }
