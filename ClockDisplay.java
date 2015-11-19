@@ -16,8 +16,6 @@ public class ClockDisplay {
     private NumberDisplay minutos;
     // Datos guardados en un String para mostar la hora
     private String timeNow;
-    //
-    private NumberDisplay horarioPM;
     
     /**
      * Crea una objeto de la clase ClockDisplay que fija la hora en 00:00 
@@ -66,11 +64,11 @@ public class ClockDisplay {
             if (formatoPM > 12) {
                 int horaCambiada;
                 horaCambiada = formatoPM - 12;
-                timeNow = horaCambiada + ":" + minutos.getDisplayValue() + " del mediodía";
+                timeNow = horaCambiada + ":" + minutos.getDisplayValue() + " pm";
             }
             else {
                 if (formatoPM == 12){
-                    timeNow = "12" + ":" + minutos.getDisplayValue() + " pm";
+                    timeNow = "12" + ":" + minutos.getDisplayValue() + " del mediodía";
                 }
                 else {
                     int horaCambiada;
