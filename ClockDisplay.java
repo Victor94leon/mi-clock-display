@@ -16,31 +16,33 @@ public class ClockDisplay {
     private NumberDisplay minutos;
     // Datos guardados en un String para mostar la hora
     private String timeNow;
-    // Parametro booleano para indicar si el objeto muestra la hora en formato 00:00 o AM/PM
-    private boolean formatoAMPM;
+    // Dato para guardar la opción de ver lahora en formato 24 ó 12
+    private boolean formato;
     
     /**
-     * Crea una objeto de la clase ClockDisplay que da la opción de mostrar la hora en formato 00:00(false) o en AM/PM(true)
+     * Crea una objeto de la clase ClockDisplay que fija la hora en 00:00 y
+     * da la opción de ver la hora en formato 12(true) ó 24(false)
      */
-    public ClockDisplay (boolean formatoReloj)
+    public ClockDisplay (boolean formato12)
     {
-        formatoAMPM = formatoReloj;
+        formato = formato12;
         horas = new NumberDisplay(24);
         minutos = new NumberDisplay(60);
-        timeNow = horas.getDisplayValue() + ":" + minutos.getDisplayValue();
+        updateHoraActual();
     }
     
     /**
-     * Crea una objeto de la clase ClockDisplay con tre parametros para fijar una hora y la opción de mostrar la hora en formato 00:00(false) o en AM/PM(true) 
+     * Crea una objeto de la clase ClockDisplay con dos parametros para fijar 
+     * la hora y la opción de ver la hora en formato 12(true) ó 24(false)
      */
-    public ClockDisplay (int parHora,int parMinuto,boolean formatoReloj)
+    public ClockDisplay (int parHora,int parMinuto,boolean formato12)
     {
-        formatoAMPM = formatoReloj;
+        formato = formato12;
         horas = new NumberDisplay(24);
         minutos = new NumberDisplay(60);
         horas.setValue(parHora);
         minutos.setValue(parMinuto);
-        timeNow = horas.getDisplayValue() + ":" + minutos.getDisplayValue();
+        updateHoraActual();
     }
     
     /**
@@ -52,39 +54,15 @@ public class ClockDisplay {
         minutos = new NumberDisplay(60);
         horas.setValue(parHora);
         minutos.setValue(parMinuto);
-        timeNow = horas.getDisplayValue() + ":" + minutos.getDisplayValue();
+        updateHoraActual();
     }
     
     /**
-     * Método que devuelve la hora con una cadena de caracteres segun AM/PM
+     * Método que devuelve la hora con una cadena de caracteres
      */
     public String getTime ()
     {
-        if (formatoAMPM == true) { 
-            int formatoPM = horas.getValue();
-            if (formatoPM == 00) {
-                timeNow = 12 + ":" + minutos.getDisplayValue() + " de medianoche";
-            }
-            else {
-                if (formatoPM > 12) {
-                    int horaCambiada;
-                    horaCambiada = formatoPM - 12;
-                    timeNow = horaCambiada + ":" + minutos.getDisplayValue() + " pm";
-                }
-                else {
-                    if (formatoPM == 12){
-                        timeNow = "12" + ":" + minutos.getDisplayValue() + " del mediodía";
-                    }
-                    else {
-                        int horaCambiada;
-                        horaCambiada = formatoPM;
-                        timeNow= horaCambiada + ":" + minutos.getDisplayValue() + " am";
-                    }
-                }
-            }
-            timeNow = horas.getDisplayValue() + ":" + minutos.getDisplayValue();
-        }
-        return timeNow;
+        return timeNow;    
     }
     
     /**
@@ -96,6 +74,42 @@ public class ClockDisplay {
         if (minutos.getValue() == 0) {
             horas.increment();
         }
-        timeNow = horas.getDisplayValue() + ":" + minutos.getDisplayValue();
+        updateHoraActual();
     }
+    
+    /**
+     * Actualiza el atributo horaActual siguiendo las normas de un
+     * reloj de 12 horas.
+     */
+    public void updateHoraActual()
+    {
+        if (formato) {
+            String formatoReloj = "a.m";
+            int horaAhora = horas.getValue(); 
+            if (horaAhora >= 12){
+                formatoReloj = "p.m.";
+            }
+            
+            if (horaAhora > 12) {
+                horaAhora = horaAhora - 12;
+            }
+            else if (horaAhora == 0) {
+                horaAhora = 12;
+            }
+            timeNow = horaAhora + ":" + minutos.getDisplayValue() + " " + formatoReloj;
+        }
+        else {
+            timeNow = horas.getDisplayValue() + ":" + minutos.getDisplayValue();
+        }
+    }
+    
+    /**
+     * Método que permite alternar entre los modos del reloj
+     */
+    public void changeFormat ()
+    {
+        formato = !formato;
+    	updateHoraActual();
+    }
+
 }
