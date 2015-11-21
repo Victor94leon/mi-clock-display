@@ -15,6 +15,8 @@
  *momento temporal completo (es decir, no solo las horas y minutos).
  */
 
+import java.util.Calendar;
+
 public class ClockDisplay {
     // Display para las horas
     private NumberDisplay horas;
@@ -30,47 +32,46 @@ public class ClockDisplay {
     private String timeNow;
     // Dato para guardar la opción de ver lahora en formato 24 ó 12
     private boolean formato;
-    
+
     /**
-     * Crea una objeto de la clase ClockDisplay que fija la hora en 00:00 y
-     * da la opción de ver la hora en formato 12(true) ó 24(false)
+     * Crea una objeto de la clase ClockDisplay que fija la fecha actual y la hora en 00:00, dando tambien
+     * la opción de ver la hora en formato 12(true) ó 24(false)
      */
     public ClockDisplay (boolean formato12)
     {
+        Calendar calendar = Calendar.getInstance();
         formato = formato12;
-        
         horas = new NumberDisplay(24);
         minutos = new NumberDisplay(60);
         años = new NumberDisplay(100);
-        meses = new NumberDisplay(12);
-        dias = new NumberDisplay(30);
-        
+        meses = new NumberDisplay(13);
+        dias = new NumberDisplay(31);
+        años.setValue(calendar.get(Calendar.YEAR)-2000);
+        meses.setValue(calendar.get(Calendar.MONTH)+1);
+        dias.setValue(calendar.get(Calendar.DAY_OF_MONTH));
         updateHoraActual();
     }
-    
+
     /**
      * Crea una objeto de la clase ClockDisplay con dos parametros para fijar 
-     * la hora y la opción de ver la hora en formato 12(true) ó 24(false)
+     * la fecha y la hora con la opción de ver la hora en formato 12(true) ó 24(false)
      */
     public ClockDisplay (int parHora,int parMinuto,int parDia,int parMes,int parAño,boolean formato12)
     {
         formato = formato12;
-        
         horas = new NumberDisplay(24);
         minutos = new NumberDisplay(60);
         años = new NumberDisplay(100);
-        meses = new NumberDisplay(12);
-        dias = new NumberDisplay(30);
-        
+        meses = new NumberDisplay(13);
+        dias = new NumberDisplay(31);
         horas.setValue(parHora);
         minutos.setValue(parMinuto);
         años.setValue(parAño);
         meses.setValue(parMes);
         dias.setValue(parDia);
-        
         updateHoraActual();
     }
-    
+
     /**
      * Método setter que fija los parámetros introducidos como lahora nueva actual
      */
@@ -79,18 +80,16 @@ public class ClockDisplay {
         horas = new NumberDisplay(24);
         minutos = new NumberDisplay(60);
         años = new NumberDisplay(100);
-        meses = new NumberDisplay(12);
-        dias = new NumberDisplay(30);
-
+        meses = new NumberDisplay(13);
+        dias = new NumberDisplay(31);
         horas.setValue(parHora);
         minutos.setValue(parMinuto);
         años.setValue(parAño);
         meses.setValue(parMes);
         dias.setValue(parDia);
-        
         updateHoraActual();
     }
-    
+
     /**
      * Método que devuelve la hora con una cadena de caracteres
      */
@@ -98,7 +97,7 @@ public class ClockDisplay {
     {
         return timeNow;    
     }
-    
+
     /**
      * Método que hace avanzar en un minuto la hora actual
      */
@@ -119,7 +118,7 @@ public class ClockDisplay {
         }
         updateHoraActual();
     }
-    
+
     /**
      * Actualiza el atributo horaActual siguiendo las normas de un
      * reloj de 12 horas.
@@ -127,32 +126,32 @@ public class ClockDisplay {
     public void updateHoraActual()
     {
         if (formato) {
-            String formatoReloj = "a.m ";
+            String formatoReloj = "a.m";
             int horaAhora = horas.getValue(); 
             if (horaAhora >= 12){
-                formatoReloj = "p.m. ";
+                formatoReloj = "p.m.";
             }
-            
+
             if (horaAhora > 12) {
                 horaAhora = horaAhora - 12;
             }
             else if (horaAhora == 0) {
                 horaAhora = 12;
             }
-            timeNow = horaAhora + ":" + minutos.getDisplayValue() + " " + formatoReloj + dias.getDisplayValue() + "/" + meses.getDisplayValue() + "/" + años.getDisplayValue();
+            timeNow = horaAhora + ":" + minutos.getDisplayValue() + formatoReloj + "-" + dias.getDisplayValue() + "/" + meses.getDisplayValue() + "/" + años.getDisplayValue();
         }
         else {
-            timeNow = horas.getDisplayValue() + ":" + minutos.getDisplayValue() + dias.getDisplayValue() + "/" + meses.getDisplayValue() + "/" + años.getDisplayValue();;
+            timeNow = horas.getDisplayValue() + ":" + minutos.getDisplayValue() + "-" + dias.getDisplayValue() + "/" + meses.getDisplayValue() + "/" + años.getDisplayValue();;
         }
     }
-    
+
     /**
      * Método que permite alternar entre los modos del reloj
      */
     public void changeFormat ()
     {
         formato = !formato;
-    	updateHoraActual();
+        updateHoraActual();
     }
 
 }
